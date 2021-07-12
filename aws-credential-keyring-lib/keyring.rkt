@@ -3,7 +3,7 @@
 (provide keyring-aws-credential)
 
 (require keyring
-         "interface.rkt")
+         aws-credential/interface)
 
 (struct keyring-aws-credential (service)
   #:methods gen:aws-credential
