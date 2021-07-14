@@ -3,18 +3,14 @@
 (provide aws-credential?
 
          gen:aws-credential
+         aws-credential-get
          aws-credential-access-key
          aws-credential-secret-access-key
          aws-credential-security-token
 
-         current-aws-credential
+         current-aws-credential)
 
-         with-aws-credential
-         with-current-aws-credential)
-
-(require (prefix-in aws: aws/keys)
-         racket/generic
-         syntax/parse/define)
+(require racket/generic)
 
 (define-generics aws-credential
   [aws-credential-get aws-credential]
@@ -55,26 +51,4 @@
    (defget aws-credential-security-token    (a b c) c)])
 
 (define current-aws-credential (make-parameter #f))
-
-(define-syntax-parse-rule (with-current-aws-credential body ...)
-  (with-aws-credential (current-aws-credential) body ...))
-
-(define-syntax-parse-rule (with-aws-credential cred-expr body ...)
-  (let ()
-    (define (do-body) body ...)
-    (let ([cred cred-expr])
-      (cond
-        ;; parameter unset just use the raw parameters as is
-        [(not cred) (do-body)]
-        [(aws-credential? cred)
-         (define-values (access-key secret-access-key security-token)
-           (aws-credential-get cred))
-         (parameterize ([aws:public-key     access-key]
-                        [aws:private-key    secret-access-key]
-                        [aws:security-token security-token])
-           (do-body))]
-        [else (error 'with-aws-credential
-                     "not a valid aws credential\n  credential: ~.a"
-                     cred)]))))
-
 
