@@ -1,10 +1,10 @@
 #lang racket/base
 
-(provide (all-from-out aws-credential/interface)
+(provide (all-from-out "credential/interface.rkt")
          with-aws-credential)
 
 (require (prefix-in aws: aws/keys)
-         aws-credential/interface)
+         "credential/interface.rkt")
 
 ;; with-aws-credential : [aws-credential] thunk
 ;; sets the parameters for authentication that the aws library uses
@@ -21,7 +21,8 @@
                         [aws:private-key    secret-access-key]
                         [aws:security-token security-token])
            (thunk))]
-        [else (error 'with-aws-credential
-                     "not a valid aws credential\n  credential: ~.a"
-                     cred)])]))
+        [else (raise-argument-error
+                'with-aws-credential
+                "(or/c aws-credential? #f)"
+                cred)])]))
 

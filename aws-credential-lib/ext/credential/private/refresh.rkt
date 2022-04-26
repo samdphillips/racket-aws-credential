@@ -1,6 +1,6 @@
 #lang racket/base
 
-(require aws-credential/interface
+(require "interface.rkt"
          racket/contract)
 
 (provide

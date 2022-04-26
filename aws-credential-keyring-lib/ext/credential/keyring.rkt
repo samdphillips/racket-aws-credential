@@ -8,7 +8,7 @@
       (->* (string?) (string? string?) aws-credential?)]))
 
 (require keyring
-         aws-credential/interface)
+         aws/ext/credential/interface)
 
 (struct keyring-aws-credential (service user-tag secret-tag)
   #:methods gen:aws-credential

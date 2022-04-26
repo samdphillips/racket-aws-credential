@@ -1,6 +1,6 @@
 #lang racket/base
 
-(require aws-credential/private/refresh
+(require "refresh.rkt"
          http/request
          net/http-easy
          net/url)
