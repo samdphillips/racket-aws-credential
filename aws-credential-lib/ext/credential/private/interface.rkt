@@ -8,7 +8,9 @@
          aws-credential-secret-access-key
          aws-credential-security-token
 
-         current-aws-credential)
+         current-aws-credential
+
+         aws-memory-credential)
 
 (require racket/generic)
 
@@ -51,4 +53,13 @@
    (defget aws-credential-security-token    (a b c) c)])
 
 (define current-aws-credential (make-parameter #f))
+
+(struct aws-memory-credential (access-key secret-access-key security-token)
+  #:methods gen:aws-credential
+  [(define-syntax-rule (def method accessor)
+     (define (method a) (accessor a)))
+
+   (def aws-credential-access-key aws-memory-credential-access-key)
+   (def aws-credential-secret-access-key aws-memory-credential-secret-access-key)
+   (def aws-credential-security-token aws-memory-credential-security-token)])
 
