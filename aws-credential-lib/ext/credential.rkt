@@ -1,10 +1,12 @@
 #lang racket/base
 
 (provide (all-from-out "credential/interface.rkt")
+         (all-from-out "credential/private/log.rkt")
          with-aws-credential)
 
 (require (prefix-in aws: aws/keys)
-         "credential/interface.rkt")
+         "credential/interface.rkt"
+         "credential/private/log.rkt")
 
 ;; with-aws-credential : [aws-credential] thunk
 ;; sets the parameters for authentication that the aws library uses
