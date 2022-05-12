@@ -1,11 +1,14 @@
 #lang racket/base
 
 (require "refresh.rkt"
-         http/request
+         gregor
          net/http-easy
          net/url)
 
 (provide make-ec2-instance-credential)
+
+(define (gmt-8601-string->seconds s)
+  (->posix (iso8601->moment s)))
 
 (struct ec2-instance-credential refresh-credential ())
 
