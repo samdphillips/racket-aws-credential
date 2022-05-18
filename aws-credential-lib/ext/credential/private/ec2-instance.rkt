@@ -50,8 +50,6 @@
    (list (hash-ref creds 'AccessKeyId)
          (hash-ref creds 'SecretAccessKey)
          (hash-ref creds 'Token))
-   (- (gmt-8601-string->seconds
-       (hash-ref creds 'Expiration))
-      300)))
+   (gmt-8601-string->seconds (hash-ref creds 'Expiration))))
 
 
